@@ -23,7 +23,7 @@ frmComTool::~frmComTool()
 
 void frmComTool::initForm()
 {
-    this->setWindowTitle("串口调试助手--yang");
+    this->setWindowTitle("串口调试助手make by yang(QQ:1065354620)");
 
 	comOk = false;
 	com = 0;
