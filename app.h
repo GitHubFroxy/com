@@ -6,6 +6,16 @@ class QString;
 class App
 {
 public:
+    enum TextType{
+        SendType = 0,//串口发送
+        ReceiveType,//串口接收
+        DelayType,//处理延时
+        VerifyType,//正在校验
+        NetSendType,//网络发送
+        NetReceiveType,//网络接收
+        TipType,//提示信息
+    };
+public:
     static QString PortName;            //串口号
     static int BaudRate;                //波特率
     static int DataBit;                 //数据位
@@ -21,6 +31,9 @@ public:
     static int SendInterval;            //自动发送间隔
     static bool AutoSave;               //自动保存
     static int SaveInterval;            //自动保存间隔
+    static bool ShowTime;               //显示时间
+    static bool ShowSend;               //显示发送
+    static bool ShowTip;                //显示提示
 
     static QString SendFileName;        //发送配置文件名
     static QString DeviceFileName;      //模拟设备数据文件名
