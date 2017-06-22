@@ -6,6 +6,16 @@
 class QextSerialPort;
 class QTcpSocket;
 
+
+QT_BEGIN_NAMESPACE
+class QCheckBox;
+class QDialogButtonBox;
+class QGroupBox;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+QT_END_NAMESPACE
+
 namespace Ui
 {
 class frmComTool;
@@ -42,12 +52,18 @@ private:
     QTcpSocket *socket;         //网络连接对象
     QTimer *timerConnect;       //定时器重连
 
+    QCheckBox *wholeWordsCheckBox;
+    QWidget *extension;
+
 private slots:
 	void initForm();                //初始化窗体数据
     void initConfig();              //初始化配置文件
     void saveConfig();              //保存配置文件
 	void readData();                //读取串口数据
 	void sendData();                //发送串口数据
+    void sendData_1();
+    void sendData_2();
+    void sendData_3();
 	void sendData(QString data);    //发送串口数据带参数
 	void saveData();                //保存串口数据
 

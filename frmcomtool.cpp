@@ -11,6 +11,7 @@ frmComTool::frmComTool(QWidget *parent) :
 	ui->setupUi(this);
 	this->initForm();
 	this->initConfig();
+
 	QTimer::singleShot(0, this, SLOT(readSendData()));
 	QTimer::singleShot(0, this, SLOT(readDeviceData()));
 	myHelper::formInCenter(this);
@@ -44,6 +45,9 @@ void frmComTool::initForm()
 	connect(timerSend, SIGNAL(timeout()), this, SLOT(sendData()));
 	connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(sendData()));
 
+    connect(ui->btnSend_1, SIGNAL(clicked()), this, SLOT(sendData_1()));
+    connect(ui->btnSend_2, SIGNAL(clicked()), this, SLOT(sendData_2()));
+    connect(ui->btnSend_3, SIGNAL(clicked()), this, SLOT(sendData_3()));
 	//保存数据
 	timerSave = new QTimer(this);
 	connect(timerSave, SIGNAL(timeout()), this, SLOT(saveData()));
@@ -61,6 +65,13 @@ void frmComTool::initForm()
 	connect(timerConnect, SIGNAL(timeout()), this, SLOT(connectNet()));
 	timerConnect->setInterval(3000);
 	timerConnect->start();
+
+    ui->btnMore->setCheckable(true);
+    ui->btnMore->setAutoDefault(false);
+    ui->widExtern->hide();
+
+    connect(ui->btnMore, &QAbstractButton::toggled, ui->widExtern, &QWidget::setVisible);
+
 }
 
 void frmComTool::initConfig()
@@ -253,6 +264,11 @@ void frmComTool::changeEnable(bool b)
 	ui->btnSend->setEnabled(b);
 	ui->ckAutoSend->setEnabled(b);
 	ui->ckAutoSave->setEnabled(b);
+
+    ui->btnSend_1->setEnabled(b);
+    ui->btnSend_2->setEnabled(b);
+    ui->btnSend_3->setEnabled(b);
+
 }
 
 void frmComTool::append(quint8 type, QString msg)
@@ -401,7 +417,39 @@ void frmComTool::sendData()
 		ui->cboxSend->setFocus();
 	}
 }
+void frmComTool::sendData_1()
+{
+    QString str = ui->lineEditSend_1->displayText();
 
+    if (str.isEmpty()) {
+        ui->cboxSend->setFocus();
+        return;
+    }
+
+    sendData(str);
+}
+void frmComTool::sendData_2()
+{
+    QString str = ui->lineEditSend_2->displayText();
+
+    if (str.isEmpty()) {
+        ui->cboxSend->setFocus();
+        return;
+    }
+
+    sendData(str);
+}
+void frmComTool::sendData_3()
+{
+    QString str = ui->lineEditSend_3->displayText();
+
+    if (str.isEmpty()) {
+        ui->cboxSend->setFocus();
+        return;
+    }
+
+    sendData(str);
+}
 void frmComTool::sendData(QString data)
 {
 	if (com == 0 || !com->isOpen()) {
