@@ -38,12 +38,14 @@ CONFIG(debug, debug|release) {
 
 SOURCES += main.cpp\
         frmcomtool.cpp \
-        app.cpp
+        app.cpp \
+    fwigglywidget.cpp
 
 HEADERS += \
         frmcomtool.h \
         app.h \
-        myhelper.h
+        myhelper.h \
+    fwigglywidget.h
 
 FORMS    += frmcomtool.ui
 

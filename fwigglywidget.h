@@ -40,12 +40,9 @@ protected:
     void paintEvent(QPaintEvent *event);
     void timerEvent(QTimerEvent *event);
 
-public:
-    void setText(const QString &newtext);
-
 private:
     QBasicTimer timer;
-    QString text;
+    QString textlabe;
     int step;
 
 };
