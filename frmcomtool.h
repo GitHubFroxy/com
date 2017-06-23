@@ -90,6 +90,7 @@ private slots:
     void on_ckAutoSave_stateChanged(int arg1);
 
     void on_btnStart_clicked();
+    void on_ckTop_toggled(bool checked);
 };
 
 #endif // FRMCOMTOOL_H

@@ -15,6 +15,7 @@ frmComTool::frmComTool(QWidget *parent) :
 	QTimer::singleShot(0, this, SLOT(readSendData()));
 	QTimer::singleShot(0, this, SLOT(readDeviceData()));
 	myHelper::formInCenter(this);
+
 }
 
 frmComTool::~frmComTool()
@@ -71,7 +72,11 @@ void frmComTool::initForm()
     ui->widExtern->hide();
 
     connect(ui->btnMore, &QAbstractButton::toggled, ui->widExtern, &QWidget::setVisible);
+    ui->labTiltle->setText("串口调试助手 made by yangchongxin QQ:1065354620");
 
+    QFont ft;
+    ft.setPointSize(18);
+    ui->labTiltle->setFont(ft);
 }
 
 void frmComTool::initConfig()
@@ -744,4 +749,15 @@ void frmComTool::on_btnStart_clicked()
 			tcpOk = false;
 		}
 	}
+}
+
+void frmComTool::on_ckTop_toggled(bool checked)
+{
+    if(checked){
+        this->setWindowFlags(Qt::WindowStaysOnTopHint);
+        this->show();
+    }else{
+        this->setWindowFlags(Qt::Widget);
+        this->show();
+    }
 }
