@@ -11,9 +11,11 @@ frmComTool::frmComTool(QWidget *parent) :
 	ui->setupUi(this);
 	this->initForm();
 	this->initConfig();
+
 	QTimer::singleShot(0, this, SLOT(readSendData()));
 	QTimer::singleShot(0, this, SLOT(readDeviceData()));
 	myHelper::formInCenter(this);
+
 }
 
 frmComTool::~frmComTool()
@@ -23,7 +25,7 @@ frmComTool::~frmComTool()
 
 void frmComTool::initForm()
 {
-    this->setWindowTitle("串口调试助手--yang");
+    this->setWindowTitle("串口调试助手make by yang(QQ:1065354620)");
 
 	comOk = false;
 	com = 0;
@@ -36,7 +38,7 @@ void frmComTool::initForm()
 
 	//读取数据
 	timerRead = new QTimer(this);
-	timerRead->setInterval(100);
+    timerRead->setInterval(100);
 	connect(timerRead, SIGNAL(timeout()), this, SLOT(readData()));
 
 	//发送数据
@@ -44,6 +46,9 @@ void frmComTool::initForm()
 	connect(timerSend, SIGNAL(timeout()), this, SLOT(sendData()));
 	connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(sendData()));
 
+    connect(ui->btnSend_1, SIGNAL(clicked()), this, SLOT(sendData_1()));
+    connect(ui->btnSend_2, SIGNAL(clicked()), this, SLOT(sendData_2()));
+    connect(ui->btnSend_3, SIGNAL(clicked()), this, SLOT(sendData_3()));
 	//保存数据
 	timerSave = new QTimer(this);
 	connect(timerSave, SIGNAL(timeout()), this, SLOT(saveData()));
@@ -61,6 +66,17 @@ void frmComTool::initForm()
 	connect(timerConnect, SIGNAL(timeout()), this, SLOT(connectNet()));
 	timerConnect->setInterval(3000);
 	timerConnect->start();
+
+    ui->btnMore->setCheckable(true);
+    ui->btnMore->setAutoDefault(false);
+    ui->widExtern->hide();
+
+    connect(ui->btnMore, &QAbstractButton::toggled, ui->widExtern, &QWidget::setVisible);
+    ui->labTiltle->setText("串口调试助手 made by yangchongxin QQ:1065354620");
+
+    QFont ft;
+    ft.setPointSize(18);
+    ui->labTiltle->setFont(ft);
 }
 
 void frmComTool::initConfig()
@@ -134,6 +150,15 @@ void frmComTool::initConfig()
 	ui->ckAutoSave->setChecked(App::AutoSave);
 	connect(ui->ckAutoSave, SIGNAL(stateChanged(int)), this, SLOT(saveConfig()));
 
+    ui->ckShowSend->setChecked(App::ShowSend);
+    connect(ui->ckShowSend, SIGNAL(stateChanged(int)), this, SLOT(saveConfig()));
+
+    ui->ckShowTime->setChecked(App::ShowTime);
+    connect(ui->ckShowTime, SIGNAL(stateChanged(int)), this, SLOT(saveConfig()));
+
+    ui->ckShowTip->setChecked(App::ShowTip);
+    connect(ui->ckShowTip, SIGNAL(stateChanged(int)), this, SLOT(saveConfig()));
+
 	QStringList sendInterval;
 	QStringList saveInterval;
 	sendInterval << "100" << "300" << "500";
@@ -206,6 +231,9 @@ void frmComTool::saveConfig()
 
 	App::AutoSend = ui->ckAutoSend->isChecked();
 	App::AutoSave = ui->ckAutoSave->isChecked();
+    App::ShowTime = ui->ckShowTime->isChecked();
+    App::ShowSend = ui->ckShowSend->isChecked();
+    App::ShowTip = ui->ckShowTip->isChecked();
 
 	int sendInterval = ui->cboxSendInterval->currentText().toInt();
 
@@ -241,6 +269,11 @@ void frmComTool::changeEnable(bool b)
 	ui->btnSend->setEnabled(b);
 	ui->ckAutoSend->setEnabled(b);
 	ui->ckAutoSave->setEnabled(b);
+
+    ui->btnSend_1->setEnabled(b);
+    ui->btnSend_2->setEnabled(b);
+    ui->btnSend_3->setEnabled(b);
+
 }
 
 void frmComTool::append(quint8 type, QString msg)
@@ -254,32 +287,75 @@ void frmComTool::append(quint8 type, QString msg)
 		currentCount = 0;
 	}
 
+    if(App::ShowSend){
+
+    }else{
+        if((type == App::TextType::SendType)||(type == App::TextType::NetSendType)){
+            return;
+        }
+    }
+
 	QString str;
+    if(App::ShowTip){
+        if (type == App::TextType::SendType) {
+            str = ">> 串口发送 :";
+            ui->txtMain->setTextColor(QColor("blue"));
+        } else if (type == App::TextType::ReceiveType) {
+            str = "<< 串口接收 :";
+            ui->txtMain->setTextColor(QColor("red"));
+        } else if (type == App::TextType::DelayType) {
+            str = ">> 处理延时 :";
+            ui->txtMain->setTextColor(QColor("gray"));
+        } else if (type == App::TextType::VerifyType) {
+            str = ">> 正在校验 :";
+            ui->txtMain->setTextColor(QColor("green"));
+        } else if (type == App::TextType::NetSendType) {
+            str = ">> 网络发送 :";
+            ui->txtMain->setTextColor(QColor(24, 189, 155));
+        } else if (type == App::TextType::NetReceiveType) {
+            str = "<< 网络接收 :";
+            ui->txtMain->setTextColor(QColor(255, 107, 107));
+        }
+        /*else if (type == App::TextType::TipType) {
+            str = ">> 提示信息 :";
+            ui->txtMain->setTextColor(QColor(100, 184, 255));
+        }*/
+    }else{
+        if (type == App::TextType::SendType) {
+            //str = ">> 串口发送 :";
+            ui->txtMain->setTextColor(QColor("blue"));
+        } else if (type == App::TextType::ReceiveType) {
+            //str = "<< 串口接收 :";
+            ui->txtMain->setTextColor(QColor("red"));
+        } else if (type == App::TextType::DelayType) {
+            //str = ">> 处理延时 :";
+            ui->txtMain->setTextColor(QColor("gray"));
+        } else if (type == App::TextType::VerifyType) {
+            //str = ">> 正在校验 :";
+            ui->txtMain->setTextColor(QColor("green"));
+        } else if (type == App::TextType::NetSendType) {
+            //str = ">> 网络发送 :";
+            ui->txtMain->setTextColor(QColor(24, 189, 155));
+        } else if (type == App::TextType::NetReceiveType) {
+            //str = "<< 网络接收 :";
+            ui->txtMain->setTextColor(QColor(255, 107, 107));
+        }
+        /*else if (type == App::TextType::TipType) {
+            str = ">> 提示信息 :";
+            ui->txtMain->setTextColor(QColor(100, 184, 255));
+        }*/
+    }
+    if(type == App::TextType::TipType) {
+        str = ">> 提示信息 :";
+        ui->txtMain->setTextColor(QColor(100, 184, 255));
+    }
 
-	if (type == 0) {
-		str = ">> 串口发送 :";
-		ui->txtMain->setTextColor(QColor("dodgerblue"));
-	} else if (type == 1) {
-		str = "<< 串口接收 :";
-		ui->txtMain->setTextColor(QColor("red"));
-	} else if (type == 2) {
-		str = ">> 处理延时 :";
-		ui->txtMain->setTextColor(QColor("gray"));
-	} else if (type == 3) {
-		str = ">> 正在校验 :";
-		ui->txtMain->setTextColor(QColor("green"));
-	} else if (type == 4) {
-		str = ">> 网络发送 :";
-		ui->txtMain->setTextColor(QColor(24, 189, 155));
-	} else if (type == 5) {
-		str = "<< 网络接收 :";
-		ui->txtMain->setTextColor(QColor(255, 107, 107));
-	} else if (type == 6) {
-		str = ">> 提示信息 :";
-		ui->txtMain->setTextColor(QColor(100, 184, 255));
-	}
+    if(App::ShowTime){
+        ui->txtMain->append(QString("时间[%1]:%2%3").arg(TIMEMS).arg(str).arg(msg));
+    }else{
+        ui->txtMain->append(QString("%2%3").arg(str).arg(msg));
+    }
 
-	ui->txtMain->append(QString("时间[%1] %2 %3").arg(TIMEMS).arg(str).arg(msg));
 	currentCount++;
 }
 
@@ -318,14 +394,14 @@ void frmComTool::readData()
 			}
 		}
 
-		append(1, buffer);
+        append(App::TextType::ReceiveType, buffer);
 		receiveCount = receiveCount + data.size();
 		ui->btnReceiveCount->setText(QString("接收 : %1 字节").arg(receiveCount));
 
 		//启用网络转发则调用网络发送数据
 		if (tcpOk) {
 			socket->write(data);
-			append(4, QString(buffer));
+            append(App::TextType::NetSendType, QString(buffer));
 		}
 	}
 }
@@ -346,7 +422,39 @@ void frmComTool::sendData()
 		ui->cboxSend->setFocus();
 	}
 }
+void frmComTool::sendData_1()
+{
+    QString str = ui->lineEditSend_1->displayText();
 
+    if (str.isEmpty()) {
+        ui->cboxSend->setFocus();
+        return;
+    }
+
+    sendData(str);
+}
+void frmComTool::sendData_2()
+{
+    QString str = ui->lineEditSend_2->displayText();
+
+    if (str.isEmpty()) {
+        ui->cboxSend->setFocus();
+        return;
+    }
+
+    sendData(str);
+}
+void frmComTool::sendData_3()
+{
+    QString str = ui->lineEditSend_3->displayText();
+
+    if (str.isEmpty()) {
+        ui->cboxSend->setFocus();
+        return;
+    }
+
+    sendData(str);
+}
 void frmComTool::sendData(QString data)
 {
 	if (com == 0 || !com->isOpen()) {
@@ -362,7 +470,7 @@ void frmComTool::sendData(QString data)
 	}
 
 	com->write(buffer);
-	append(0, data);
+    append(App::TextType::SendType, data);
 	sendCount = sendCount + buffer.size();
 	ui->btnSendCount->setText(QString("发送 : %1 字节").arg(sendCount));
 }
@@ -518,17 +626,18 @@ void frmComTool::on_btnData_clicked()
 	QFile file(fileName);
 
 	if (!file.exists()) {
+        qDebug()<<"there is no"<<fileName;
 		return;
 	}
 
-	if (ui->btnData->text() == "管理数据") {
+    if (ui->btnData->text() == "管理send数据") {
 		ui->txtMain->setReadOnly(false);
 		ui->txtMain->clear();
 		file.open(QFile::ReadOnly | QIODevice::Text);
 		QTextStream in(&file);
 		ui->txtMain->setText(in.readAll());
 		file.close();
-		ui->btnData->setText("保存数据");
+        ui->btnData->setText("保存send数据");
 	} else {
 		ui->txtMain->setReadOnly(true);
 		file.open(QFile::WriteOnly | QIODevice::Text);
@@ -536,7 +645,7 @@ void frmComTool::on_btnData_clicked()
 		out << ui->txtMain->toPlainText();
 		file.close();
 		ui->txtMain->clear();
-		ui->btnData->setText("管理数据");
+        ui->btnData->setText("管理send数据");
 		this->readSendData();
 	}
 }
@@ -577,7 +686,7 @@ void frmComTool::connectNet()
 
 			if (socket->waitForConnected(100)) {
 				ui->btnStart->setText("停止");
-				append(6, "连接服务器成功");
+                append(App::TextType::TipType, "连接服务器成功");
 				tcpOk = true;
 			}
 		}
@@ -598,12 +707,12 @@ void frmComTool::readDataNet()
 			buffer = myHelper::byteArrayToAsciiStr(data);
 		}
 
-		append(5, buffer);
+        append(App::TextType::NetReceiveType, buffer);
 
 		//将收到的网络数据转发给串口
 		if (comOk) {
 			com->write(data);
-			append(0, buffer);
+            append(App::TextType::SendType, buffer);
 		}
 	}
 }
@@ -611,7 +720,7 @@ void frmComTool::readDataNet()
 void frmComTool::readErrorNet()
 {
 	ui->btnStart->setText("启动");
-	append(6, QString("连接服务器失败,%1").arg(socket->errorString()));
+    append(App::TextType::TipType, QString("连接服务器失败,%1").arg(socket->errorString()));
 	socket->disconnectFromHost();
 	tcpOk = false;
 }
@@ -620,7 +729,7 @@ void frmComTool::on_btnStart_clicked()
 {
 	if (ui->btnStart->text() == "启动") {
 		if (App::ServerIP == "" || App::ServerPort == 0) {
-			append(6, "IP地址和远程端口不能为空");
+            append(App::TextType::TipType, "IP地址和远程端口不能为空");
 			return;
 		}
 
@@ -628,7 +737,7 @@ void frmComTool::on_btnStart_clicked()
 
 		if (socket->waitForConnected(100)) {
 			ui->btnStart->setText("停止");
-			append(6, "连接服务器成功");
+            append(App::TextType::TipType, "连接服务器成功");
 			tcpOk = true;
 		}
 	} else {
@@ -636,8 +745,19 @@ void frmComTool::on_btnStart_clicked()
 
 		if (socket->state() == QAbstractSocket::UnconnectedState || socket->waitForDisconnected(100)) {
 			ui->btnStart->setText("启动");
-			append(6, "断开服务器成功");
+            append(App::TextType::TipType, "断开服务器成功");
 			tcpOk = false;
 		}
 	}
+}
+
+void frmComTool::on_ckTop_toggled(bool checked)
+{
+    if(checked){
+        this->setWindowFlags(Qt::WindowStaysOnTopHint);
+        this->show();
+    }else{
+        this->setWindowFlags(Qt::Widget);
+        this->show();
+    }
 }

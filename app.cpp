@@ -12,6 +12,9 @@ bool App::HexSend = false;
 bool App::HexReceive = false;
 bool App::Debug = false;
 bool App::AutoClear = false;
+bool App::ShowTime = true;
+bool App::ShowSend = true;
+bool App::ShowTip = true;
 
 bool App::AutoSend = false;
 int App::SendInterval = 1000;
@@ -48,6 +51,9 @@ void App::ReadConfig()
     App::HexReceive = set.value("HexReceive").toBool();
     App::Debug = set.value("Debug").toBool();
     App::AutoClear = set.value("AutoClear").toBool();
+    App::ShowTime = set.value("ShowTime").toBool();
+    App::ShowSend = set.value("ShowSend").toBool();
+    App::ShowTip = set.value("ShowTip").toBool();
 
     App::AutoSend = set.value("AutoSend").toBool();
     App::SendInterval = set.value("SendInterval").toInt();
@@ -84,6 +90,9 @@ void App::WriteConfig()
     set.setValue("HexReceive", App::HexReceive);
     set.setValue("Debug", App::Debug);
     set.setValue("AutoClear", App::AutoClear);
+    set.setValue("ShowTime", App::ShowTime);
+    set.setValue("ShowSend", App::ShowSend);
+    set.setValue("ShowTip", App::ShowTip);
 
     set.setValue("AutoSend", App::AutoSend);
     set.setValue("SendInterval", App::SendInterval);
