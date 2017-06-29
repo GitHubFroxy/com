@@ -17,6 +17,19 @@ DESTDIR             = bin
 win32:RC_FILE       = main.rc
 PRECOMPILED_HEADER  = myhelper.h
 
+#添加以下定义可以关闭qDebug和qWarning的输出 定义编译选项
+DEFINES += QT_NO_WARNING_OUTPUT\
+           QT_NO_DEBUG_OUTPUT
+
+
+#条件编译
+#DEFINES += RUN_ON_EMBEDDEDSYSTEM
+#if(contains(DEFINES,RUN_ON_EMBEDDEDSYSTEM)){#contains和{必须在同一行，否则报错
+#符合条件的编译
+#}else{
+#不符合条件的
+#}
+
 include($$PWD/qextserialport/qextserialport.pri)
 
 # build dir
