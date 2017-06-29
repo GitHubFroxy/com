@@ -3,6 +3,40 @@
 #include "myhelper.h"
 #include <QSplashScreen>
 
+//绘制透明图片
+void DrawKit(void)
+{
+    QImage image(30, 30, QImage::Format_ARGB32);
+    memset(image.bits(), 0x00, image.byteCount());
+
+    // 绘制图片
+    QPainter painter(&image);
+    painter.setPen(QPen(Qt::red, 2, Qt::SolidLine));
+    painter.translate(15, 15);
+
+    painter.drawLine(0-15, 0-15, 0-8, 0-15);
+    painter.drawLine(0+15, 0-15, 0+8, 0-15);
+
+    painter.drawLine(0-15, 0+15, 0-8, 0+15);
+    painter.drawLine(0+15, 0+15, 0+8, 0+15);
+
+    painter.drawLine(0-15, 0-15, 0-15, 0-8);
+    painter.drawLine(0+15, 0-15, 0+15, 0-8);
+
+    painter.drawLine(0-15, 0+15, 0-15, 0+8);
+    painter.drawLine(0+15, 0+15, 0+15, 0+8);
+
+    qDebug() << image.save("C:/Users/ASUS/Desktop/test2.png", "PNG");
+
+}
+//剪切图片
+void CropImage(void)
+{
+    QImage image("C:/Users/ASUS/Desktop/test.png");
+    QImage newImage = image.copy(90, 90, image.width()-90, image.height()-90);
+    qDebug() << newImage.save("C:/Users/ASUS/Desktop/CropedImage.png");
+}
+
 #if 1
 #include <QDateTime>
 #include <QFile>
@@ -110,6 +144,8 @@ int main(int argc, char *argv[])
     name.append(" log");
     logfile = QString("%1/%2.txt").arg(AppPath).arg(name);
 
+//    DrawKit();
+//    CropImage();
     // 安装消息处理程序
     qInstallMessageHandler(myMessageOutput);
 
