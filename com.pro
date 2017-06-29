@@ -18,8 +18,8 @@ win32:RC_FILE       = main.rc
 PRECOMPILED_HEADER  = myhelper.h
 
 #添加以下定义可以关闭qDebug和qWarning的输出 定义编译选项
-DEFINES += QT_NO_WARNING_OUTPUT\
-           QT_NO_DEBUG_OUTPUT
+#DEFINES += QT_NO_WARNING_OUTPUT\
+#           QT_NO_DEBUG_OUTPUT
 
 
 #条件编译

@@ -31,7 +31,7 @@ void frmComTool::initForm()
 	com = 0;
 	maxCount = 50;
 	currentCount = 0;
-	sleepTime = 10;
+    sleepTime = 10;
 	receiveCount = 0;
 	sendCount = 0;
 	isShow = true;
@@ -387,10 +387,14 @@ void frmComTool::readData()
 			int count = keys.count();
 
 			for (int i = 0; i < count; i++) {
-				if (buffer.startsWith(keys.at(i))) {
-					sendData(values.at(i));
-					break;
-				}
+//                if (buffer.startsWith(keys.at(i))) {
+//                    sendData(values.at(i));
+//                    break;
+//                }
+                if (buffer.compare(keys.at(i)) == 0) {
+                    sendData(values.at(i));
+                    break;
+                }
 			}
 		}
 
