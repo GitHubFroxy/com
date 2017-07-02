@@ -52,15 +52,18 @@ CONFIG(debug, debug|release) {
 SOURCES += main.cpp\
         frmcomtool.cpp \
         app.cpp \
-    fwigglywidget.cpp
+    fwigglywidget.cpp \
+    externwin.cpp
 
 HEADERS += \
         frmcomtool.h \
         app.h \
         myhelper.h \
-    fwigglywidget.h
+    fwigglywidget.h \
+    externwin.h
 
-FORMS    += frmcomtool.ui
+FORMS    += frmcomtool.ui \
+    externwin.ui
 
 RESOURCES += \
     main.qrc

@@ -6,6 +6,7 @@
 class QextSerialPort;
 class QTcpSocket;
 
+class ExternWin;
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
@@ -55,6 +56,8 @@ private:
     QCheckBox *wholeWordsCheckBox;
     QWidget *extension;
 
+    ExternWin *externwin;//扩展窗口
+
 private slots:
 	void initForm();                //初始化窗体数据
     void initConfig();              //初始化配置文件
@@ -72,6 +75,8 @@ private slots:
 
 	void changeEnable(bool b);      //改变状态
 	void append(quint8 type, QString msg);
+
+    void on_ck_OpenWin(void);//打开扩展窗口
 
 private slots:
     void connectNet();

@@ -3,6 +3,7 @@
 #include "myhelper.h"
 #include "app.h"
 #include "qextserialport/qextserialport.h"
+#include "externwin.h"
 
 frmComTool::frmComTool(QWidget *parent) :
 	QWidget(parent),
@@ -214,6 +215,9 @@ void frmComTool::initConfig()
 
 	ui->ckAutoConnect->setChecked(App::AutoConnect);
 	connect(ui->ckAutoConnect, SIGNAL(stateChanged(int)), this, SLOT(saveConfig()));
+
+    //打开扩展窗口
+    connect(ui->btnOpenWin,SIGNAL(pressed()),this,SLOT(on_ck_OpenWin()));
 }
 
 void frmComTool::saveConfig()
@@ -764,4 +768,11 @@ void frmComTool::on_ckTop_toggled(bool checked)
         this->setWindowFlags(Qt::Widget);
         this->show();
     }
+}
+void frmComTool::on_ck_OpenWin(void)
+{
+   externwin = new ExternWin();
+ //  externwin->setWindowFlags(Qt::WindowStaysOnTopHint);
+ //  externwin->setParent(this);
+   externwin->show();
 }

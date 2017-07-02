@@ -177,7 +177,7 @@
          <enum>QTabWidget::South</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -577,6 +577,13 @@
        </layout>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="btnOpenWin">
+     <property name="text">
+      <string>打开新窗口</string>
+     </property>
     </widget>
    </item>
   </layout>
