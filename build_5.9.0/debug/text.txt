@@ -1,3 +1,6 @@
+[General]
+host=192.168.1.110
+
 #iface atm10 inet dhcp
 
 auto eth0
@@ -5,4 +8,4 @@ iface eth0 inet static
         address 192.168.1.111
         netmask 255.255.255.0
         network 192.168.1.1
-        geteway 192.168.1.1
+        gateway 100.10.001.10

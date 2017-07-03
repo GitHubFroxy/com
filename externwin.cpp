@@ -82,6 +82,14 @@ void ExternWin::write(){
         }
     }
     writeFile.close();
+//两外一种配置文件方法
+#if 0
+    QString path="text.txt";
+    QSettings settings(path,QSettings::IniFormat);
+    QString value=settings.value("host","127.0.0.1").toString();
+
+    settings.setValue("host","192.168.1.110");
+#endif
 
 }
 void ExternWin::load(){
