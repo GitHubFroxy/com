@@ -4,6 +4,9 @@
 #include <QtNetwork>
 #include <QtXml>
 
+#include <stdio.h>
+using namespace std;//解决string未定义问题
+
 #if (QT_VERSION > QT_VERSION_CHECK(5,0,0))
 #include <QtWidgets>
 #endif
@@ -566,6 +569,19 @@ public:
         bool ok;
         return strHex.toInt(&ok, 16);
     }
+//qlabel->setText(QString(str2qstr(string("支持中文"))));用于中文显示的转化
+    QString str2qstr(const string str)
+    {
+        return QString::fromLocal8Bit(str.data());
+    }
+
+    string qstr2str(const QString qstr)
+    {
+        QByteArray cdata = qstr.toLocal8Bit();
+        return string(cdata);
+    }
+
+
 };
 
 #endif // MYHELPER_H

@@ -18,6 +18,7 @@ void ExternWin::initForm()
 
     connect(ui->write,SIGNAL(pressed()),this,SLOT(write()));
     connect(ui->load,SIGNAL(pressed()),this,SLOT(load()));
+
 }
 void ExternWin::initConfig()
 {
