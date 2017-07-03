@@ -15,6 +15,12 @@ public:
     explicit ExternWin(QWidget *parent = 0);
     ~ExternWin();
 
+public:
+    void initForm();
+    void initConfig();
+private slots:
+    void write();
+    void load();
 private:
     Ui::ExternWin *ui;
 };

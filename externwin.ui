@@ -36,7 +36,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="address"/>
       </item>
      </layout>
     </item>
@@ -50,7 +50,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="netmask"/>
       </item>
      </layout>
     </item>
@@ -64,7 +64,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="network"/>
       </item>
      </layout>
     </item>
@@ -78,14 +78,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_4"/>
+       <widget class="QLineEdit" name="gateway"/>
       </item>
      </layout>
     </item>
     <item row="4" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="load">
         <property name="text">
          <string>读取</string>
         </property>
@@ -105,7 +105,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="write">
         <property name="text">
          <string>写入</string>
         </property>
