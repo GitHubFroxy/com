@@ -17,6 +17,10 @@ frmComTool::frmComTool(QWidget *parent) :
 	QTimer::singleShot(0, this, SLOT(readDeviceData()));
 	myHelper::formInCenter(this);
 
+//设置背景颜色
+    QPalette palette;
+    palette.setBrush(this->backgroundRole(), Qt::darkCyan);
+    this->setPalette(palette);
 }
 
 frmComTool::~frmComTool()
