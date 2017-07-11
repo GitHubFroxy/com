@@ -14,7 +14,9 @@ class ExternWin : public QWidget
 public:
     explicit ExternWin(QWidget *parent = 0);
     ~ExternWin();
-
+protected:
+        virtual void mousePressEvent(QMouseEvent *event);
+        virtual void mouseReleaseEvent(QMouseEvent *event);
 public:
     void initForm();
     void initConfig();

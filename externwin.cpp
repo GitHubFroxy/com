@@ -201,6 +201,43 @@ void ExternWin::load(){
     }
     readFile.close();
 }
+
+void ExternWin::mousePressEvent(QMouseEvent *event)
+{
+    QString coursePosition;
+    QString temp_x;
+    QString temp_y;
+    QPoint coursePoint;
+    if(event->button()==Qt::LeftButton)
+    {
+           coursePoint = QCursor::pos();//获取当前光标的位置
+           coursePoint = mapFromGlobal(coursePoint);//转换为相对位置
+           temp_x.setNum(coursePoint.x());
+           temp_y.setNum(coursePoint.y());
+           coursePosition.append("Mouse Position\n");
+           coursePosition.append(" X- ");
+           coursePosition.append(temp_x);
+           coursePosition.append(" Y- ");
+           coursePosition.append(temp_y);
+           qDebug()<<coursePosition;
+           setCursor(Qt::CrossCursor);//设置鼠标为十字星
+    }else{
+        setCursor(Qt::ArrowCursor);//设置鼠标
+
+    }
+}
+void ExternWin::mouseReleaseEvent(QMouseEvent *event)
+{
+
+    if(event->button()==Qt::LeftButton)
+    {
+
+       setCursor(Qt::ArrowCursor);//设置鼠标
+    }else{
+
+
+    }
+}
 ExternWin::~ExternWin()
 {
     delete ui;
