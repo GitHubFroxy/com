@@ -135,9 +135,20 @@ void printscreeninfo()
    qCritical("desktop.h==%s\n",qPrintable(QString::number(QApplication::desktop()->height())));
 }
 
+static void setStyle(const QString &style) {
+    QFile qss(style);
+    qss.open(QFile::ReadOnly);
+    qApp->setStyleSheet(qss.readAll());
+    qss.close();
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+//    setStyle(":/qss/dark.qss");
+//    setStyle(":/qss/styleSheet.css");
+//    setStyle(":/qss/white.qss");
 
     QDateTime now = QDateTime::currentDateTime();
     QString name = now.toString("yyyy-MM-dd-HH-mm-ss");

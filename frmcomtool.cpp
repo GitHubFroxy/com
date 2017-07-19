@@ -18,9 +18,9 @@ frmComTool::frmComTool(QWidget *parent) :
 	myHelper::formInCenter(this);
 
 //设置背景颜色
-    QPalette palette;
-    palette.setBrush(this->backgroundRole(), Qt::darkCyan);
-    this->setPalette(palette);
+//    QPalette palette;
+//    palette.setBrush(this->backgroundRole(), Qt::darkCyan);
+//    this->setPalette(palette);
 }
 
 frmComTool::~frmComTool()

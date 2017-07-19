@@ -3,4 +3,9 @@
         <file>main.ico</file>
         <file>start.png</file>
     </qresource>
+    <qresource prefix="/qss">
+        <file>dark.qss</file>
+        <file>styleSheet.css</file>
+        <file>white.qss</file>
+    </qresource>
 </RCC>
